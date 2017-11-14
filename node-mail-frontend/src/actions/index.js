@@ -6,9 +6,15 @@ export function getAction(){
     fetch('http://localhost:8080/api/send', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        // Authorization: `Bearer ${token}`
-      }
+        'Content-Type': 'application/json'
+      },
+      body:  JSON.stringify({
+        from: "from.k@example.in",
+        to: ['to.k@example.in'],
+        subject: 'Sendgrid API',
+        textContent: 'Text Content',
+        htmlContent: '<html><body>Hello Sir,</body></html>'
+      }),
     }).then(((response)=>{
       return response.json();
     })

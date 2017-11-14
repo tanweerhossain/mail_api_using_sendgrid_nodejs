@@ -14,7 +14,7 @@ function sendEmail(
 ) {
     const errorEmails = [];
     const successfulEmails = [];
-    const sg = require('sendgrid')('__SendGrid API Key__');
+    const sg = require('sendgrid')('__API__KEY__');
     async.parallel([
       function(callback) {
         // Add to emails
@@ -45,7 +45,7 @@ function sendEmail(
         callback(null, true);
       }
     ], function(err, results) {
-      console.log('Done');
+      console.log('Done===>', results);
     });
     parentCallback(null,
       {
@@ -59,19 +59,20 @@ function sendEmail(
 router.post('/', (req, res, next) => {
 
     //==========================================================
-
+    const { from, to, subject, textContent, htmlContent } = req.body;
     async.parallel([
       function (callback) {
         sendEmail(
           callback,
-          'from@example.in',
-          ['to1@example.in', 'to2@example.in'],
-          'SendGrid Api Successfully',
-          'Text Content',
-          '<h2>Hello</h2>'
+          from,
+          to,
+          subject,
+          textContent,
+          htmlContent
         );
       }
     ], function(err, results) {
+      console.log('----->',results);
       res.send({
         success: true,
         message: 'Emails sent',
