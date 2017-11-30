@@ -3,17 +3,37 @@ import fetch from 'isomorphic-fetch';
 
 export function getAction(){
   return (
-    fetch('http://localhost:8080/api/send', {
+    fetch('http://localhost:8080/email/jsonparserservlet', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        "Authorization": "Bearer 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"
       },
       body:  JSON.stringify({
-        from: "from.k@example.in",
-        to: ['to.k@example.in'],
-        subject: 'Sendgrid API',
-        textContent: 'Text Content',
-        htmlContent: '<html><body>Hello Sir,</body></html>'
+        "personalizations": [
+          {
+            "to": [
+               "tanweer@myanatomy.in"
+            ],
+            "cc": [
+               "tanweerhossainatspacebbsr@hotmail.com"
+            ],
+            "bcc": [
+               "tanweerhossainatspacebbsr@gmail.com",
+               "tanweerhossain.1996@gmail.com"
+            ],
+            "subject": "Mail Send through tomcat8 and sendgrid"
+          }
+        ],
+        "from": "tanweer@myanatomy.in",
+        "reply_to": "ajeet@myanatomy.in",
+        "subject": "Mail Send through tomcat8 and sendgrid",
+        "content": [
+          {
+            "type": "text/html",
+            "value": "<html><p>Hi Sir,<br /><br />Its Done</p></html>"
+          }
+        ]
       }),
     }).then(((response)=>{
       return response.json();
@@ -37,15 +57,3 @@ export function getAction(){
     )
 );
 }
-  // return function(){
-  //     axios.get("/api/send")
-  //         .then((response) => {
-  //           window.alert('Mail send successfully. See console');
-  //           console.log('Response ====>',response);
-  //         })
-  //         .catch((error) => {
-  //             window.alert('Error occured see console.');
-  //             console.log('Errors ====>',error);
-  //         })
-  // }
-  //}
