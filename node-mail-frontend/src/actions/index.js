@@ -7,31 +7,34 @@ export function getAction(){
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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"
+        "Authorization": "Bearer --SENDGRID API KEY--"
       },
       body:  JSON.stringify({
         "personalizations": [
           {
             "to": [
-               "tanweer@myanatomy.in"
+               "abc@mail.xy"
             ],
             "cc": [
-               "tanweerhossainatspacebbsr@hotmail.com"
+              "abc@mail.xy",
+              "abc@mail.xy",
+              "abc@mail.xy",
+              "abc@mail.xy"
             ],
             "bcc": [
-               "tanweerhossainatspacebbsr@gmail.com",
-               "tanweerhossain.1996@gmail.com"
+               "abc@gmail.xyz",
+               "abc@gmail.xyz"
             ],
-            "subject": "Mail Send through tomcat8 and sendgrid"
+            "subject": "Mail Send through AWS, tomcat8 and sendgrid"
           }
         ],
-        "from": "tanweer@myanatomy.in",
-        "reply_to": "ajeet@myanatomy.in",
+        "from": "abc@mail.xy",
+        "reply_to": "abc@mail.xy",
         "subject": "Mail Send through tomcat8 and sendgrid",
         "content": [
           {
             "type": "text/html",
-            "value": "<html><p>Hi Sir,<br /><br />Its Done</p></html>"
+            "value": "<html>Hello</html>"
           }
         ]
       }),
