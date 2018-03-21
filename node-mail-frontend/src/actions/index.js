@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch';
-
+import { createFetch, header, method, base } from 'http-client';
+import { Client } from "node-rest-client-promise";
 
 export function getAction(){
   return (
@@ -59,4 +60,74 @@ export function getAction(){
         }),
     )
 );
+}
+
+export const hitAction = () => (
+  fetch('http://localhost:8080/users', {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(((response)=>{
+    return response.json();
+  })
+  ).then(
+    responseData =>
+      new Promise((resolve, reject) => {
+        // Check if there is error in the responseData
+        console.log(responseData);
+        const { status } = responseData; //, msg
+        // window.alert('msg = ' +  msg);
+        if (status) {
+          // Else resolve with responseData
+          resolve(responseData);
+        } else {
+          const { errors } = responseData;
+          // In case of error, reject with returning error and errorCode
+          reject({ errors });
+        }
+      }),
+  )
+);
+
+
+
+export const hitAction2 = () => {
+  const get = createFetch(
+    method('GET'),
+    header('Content-Type', 'application/json'),
+    base('http://localhost:8080/users')
+  );
+  return get('/')
+  .then(((response)=>{
+    return response.json();
+  })
+  ).then(
+    responseData =>
+      new Promise((resolve, reject) => {
+        // Check if there is error in the responseData
+        console.log('Action2 ==> ', responseData);
+        const { status } = responseData; //, msg
+        // window.alert('msg = ' +  msg);
+        if (status) {
+          // Else resolve with responseData
+          resolve(responseData);
+        } else {
+          const { errors } = responseData;
+          // In case of error, reject with returning error and errorCode
+          reject({ errors });
+        }
+      }),
+  )
+}
+
+
+export const hitAction3 = () => {
+  const client = new Client();
+  let x = '';
+  x = client.get('http://localhost:8080/users', (data, response)=>{
+    console.log('Action3 ==>', data)
+    return data;
+  })
+  console.log('=============>', x);
 }
